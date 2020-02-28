@@ -9,16 +9,27 @@
 
 using namespace std;
 
+float randf(float max) {
+    return static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/max));
+}
+
+vec2f rand_vec2(const float range) {
+    return vec2f(randf(range), randf(range));
+}
+
 int main() {
     Timer timer = Timer();
-
-    NeutronField neutronField = NeutronField();
     Clock clock = Clock();
+
+    const int population = 200000;
+    NeutronField neutronField = NeutronField(population);
 
     cout << "Create neutrons" << endl;
     timer.start();
-    for (int ii = 0; ii < 20000; ++ii) {
+    for (int ii = 0; ii < population; ++ii) {
         Neutron n = Neutron();
+        n.position = rand_vec2(100.0f);
+        n.velocity = rand_vec2(100.0f);
         neutronField.addNeutron(n);
     }
     cout << "Creation took: " << timer.end() << endl;

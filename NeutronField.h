@@ -5,15 +5,15 @@
 #ifndef REACTORCPPTEST_NEUTRONFIELD_H
 #define REACTORCPPTEST_NEUTRONFIELD_H
 
-#include <list>
+#include <vector>
 #include "Neutron.h"
 
 class NeutronField {
 private:
-    std::list<Neutron> neutrons;
-
+    std::vector<Neutron> neutrons;
+    std::vector<int> toRemove;
 public:
-    NeutronField();
+    explicit NeutronField(int capacity);
     void addNeutron(const Neutron& neutron);
     int numNeutrons() const;
 

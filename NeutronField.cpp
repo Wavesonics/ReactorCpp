@@ -6,10 +6,14 @@
 #include "vec2.h"
 
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
-NeutronField::NeutronField() = default;
+NeutronField::NeutronField(int capacity) {
+    neutrons.reserve(capacity);
+    toRemove.reserve(capacity / 4);
+}
 
 void NeutronField::addNeutron(const Neutron &neutron) {
     neutrons.push_back(neutron);
@@ -20,16 +24,19 @@ int NeutronField::numNeutrons() const {
 }
 
 void NeutronField::_physics_process(double delta) {
-    //for (auto & n : neutrons) {
-    for (auto it = neutrons.begin(); it != neutrons.end();) {
-        auto n = *it;
-        n.position = n.velocity * delta;
+    const int n = neutrons.size();
+    for (int ii = 0; ii < n; ++ii) {
+        auto neutron = neutrons[ii];
+        neutron.position = neutron.velocity * delta;
 
         float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
         if (r > 99.9f) {
-            neutrons.erase(it);
-        } else {
-            ++it;
+            toRemove.push_back(ii);
         }
+    }
+
+    sort(toRemove.begin(), toRemove.end());
+    for (auto index = toRemove.crbegin(); index != toRemove.crend(); ++index) {
+        neutrons.erase(neutrons.begin() + *index);
     }
 }
