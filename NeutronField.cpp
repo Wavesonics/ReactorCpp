@@ -10,9 +10,9 @@
 
 using namespace std;
 
-NeutronField::NeutronField(int capacity) {
+NeutronField::NeutronField(int capacity, const Area2d &core) : reactorCore(core) {
     neutrons.reserve(capacity);
-    toRemove.reserve(capacity / 4);
+    toRemove.reserve(capacity);
 }
 
 void NeutronField::addNeutron(const Neutron &neutron) {
@@ -27,16 +27,18 @@ void NeutronField::_physics_process(double delta) {
     const int n = neutrons.size();
     for (int ii = 0; ii < n; ++ii) {
         auto neutron = neutrons[ii];
-        neutron.position = neutron.velocity * delta;
+        vec2f scaledVelocity = neutron.velocity * delta;
+        neutrons[ii].position += scaledVelocity;
 
-        float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-        if (r > 99.9f) {
+        if (!reactorCore.contains(neutron.position)) {
             toRemove.push_back(ii);
         }
     }
 
     sort(toRemove.begin(), toRemove.end());
     for (auto index = toRemove.crbegin(); index != toRemove.crend(); ++index) {
+        // $TODO: Holy shit performance problems
         neutrons.erase(neutrons.begin() + *index);
     }
+    toRemove.clear();
 }

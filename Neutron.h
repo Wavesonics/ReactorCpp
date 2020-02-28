@@ -7,10 +7,17 @@
 
 #include "vec2.h"
 
-struct Neutron {
+class Neutron {
+public:
     vec2f position;
     vec2f velocity;
+
+    Neutron();
+    Neutron(const vec2f& position, const vec2f& velocity);
 };
+
+static constexpr float NEUTRON_SPEED_THERMAL = 10.0f;
+static constexpr float NEUTRON_SPEED_RELATIVISTIC = 1000.0f;
 
 
 std::ostream& operator<<(std::ostream& os, const Neutron& n);

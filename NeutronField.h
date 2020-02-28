@@ -7,13 +7,16 @@
 
 #include <vector>
 #include "Neutron.h"
+#include "Area2d.h"
 
 class NeutronField {
 private:
     std::vector<Neutron> neutrons;
     std::vector<int> toRemove;
+
+    const Area2d& reactorCore;
 public:
-    explicit NeutronField(int capacity);
+    explicit NeutronField(int capacity, const Area2d &core);
     void addNeutron(const Neutron& neutron);
     int numNeutrons() const;
 
