@@ -7,16 +7,9 @@
 #include "actors/Neutron.h"
 #include "actors/NeutronField.h"
 #include "math/Area2d.h"
+#include "util/Utils.h"
 
 using namespace std;
-
-float randf(const float min, float max) {
-    return min + (static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/max)));
-}
-
-vec2f rand_vec2(const float start, const float range) {
-    return vec2f(randf(start, range), randf(start, range));
-}
 
 int main() {
     Timer timer = Timer();
