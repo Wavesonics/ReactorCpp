@@ -15,7 +15,7 @@ class Moderator : public NeutronRegion
 {
 public:
     explicit Moderator(Area2d bounds);
-    virtual ~Moderator();
+    ~Moderator() override;
 
     void _physics_process(float delta) override;
     bool handleNeutron(Neutron &neutron) override;

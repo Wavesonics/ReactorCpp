@@ -25,3 +25,13 @@ std::ostream &operator<<(std::ostream &os, Area2d &a)
 	os << "Bottom Left" << a.bottomLeft << " Top Right: " << a.topRight << ")";
 	return os;
 }
+
+float Area2d::width() const
+{
+	return topRight.x - bottomLeft.x;
+}
+
+float Area2d::height() const
+{
+	return topRight.y - bottomLeft.y;
+}

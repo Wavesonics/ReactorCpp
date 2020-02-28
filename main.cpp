@@ -8,6 +8,8 @@
 #include "actors/NeutronField.h"
 #include "util/Utils.h"
 #include "actors/Moderator.h"
+#include "actors/FuelRod.h"
+#include "actors/ControlRod.h"
 
 using namespace std;
 
@@ -17,12 +19,12 @@ int main()
 	Timer timer = Timer();
 	Clock clock = Clock();
 
-	vector<Node*> nodes;
+	vector<Node *> nodes;
 
 	const Area2d reactorCore = Area2d(vec2f(), vec2f(100.0f, 100.0f));
 
 	const int population = 100000;
-	auto* neutronField = new NeutronField(population, reactorCore);
+	auto *neutronField = new NeutronField(population, reactorCore);
 	nodes.push_back(neutronField);
 
 	auto moderator = new Moderator(Area2d(vec2f(10.0f, 10.0f), vec2f(30.0f, 90.0f)));
@@ -33,20 +35,29 @@ int main()
 	nodes.push_back(moderator);
 	neutronField->addNeutronRegion(moderator);
 
+	auto fuelRod = new FuelRod(neutronField, Area2d(vec2f(40.0f, 10.0f), vec2f(60.0f, 90.0f)));
+	nodes.push_back(fuelRod);
+	neutronField->addNeutronRegion(fuelRod);
 
+	auto control = new ControlRod(Area2d(vec2f(70.0f, 10.0f), vec2f(80.0f, 90.0f)));
+	nodes.push_back(control);
+	neutronField->addNeutronRegion(control);
+
+	/*
 	cout << "Create neutrons" << endl;
 	timer.start();
-	for (int ii = 0; ii < population; ++ii)
+	for(int ii = 0; ii < population; ++ii)
 	{
 		vec2f velocity = rand_vec2(0.01, 1.0).normalize() * Neutron::SPEED_RELATIVISTIC;
 		vec2f position = rand_vec2(10.0, 90.0f);
 		Neutron n = Neutron(position, velocity);
 		neutronField->addNeutron(n);
 	}
-	cout << "Creation took: " << timer.end() << endl;
+	 cout << "Creation took: " << timer.end() << endl;
+	*/
 
 	cout << "Begin sim" << endl;
-	while (true)
+	while(true)
 	{
 		clock.tick();
 		const float delta = clock.getDetla();

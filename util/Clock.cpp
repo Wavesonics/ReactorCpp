@@ -17,9 +17,9 @@ void Clock::tick()
 {
 	chrono::time_point curTick = chrono::high_resolution_clock::now();
 	chrono::duration dur = curTick - lastTick;
-	auto ms = chrono::duration_cast<chrono::milliseconds>(dur).count();
+	auto ms = chrono::duration_cast<chrono::microseconds >(dur).count();
 	lastTick = curTick;
-	delta = (float) ms / 1000.0f;
+	delta = (float) ms / 1000000.0f;
 }
 
 float Clock::getDetla()

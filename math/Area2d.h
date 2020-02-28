@@ -16,6 +16,8 @@ public:
 	Area2d(const vec2f &bottomLeft, const vec2f &topRight);
 
 	bool contains(const vec2f &point) const;
+	float width() const;
+	float height() const;
 
 	friend std::ostream &operator<<(std::ostream &os, const Area2d &a);
 

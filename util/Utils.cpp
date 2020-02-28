@@ -19,6 +19,11 @@ vec2f rand_vec2(const float start, const float range)
 	return vec2f(randf(start, range), randf(start, range));
 }
 
+vec2f rand_vec2(const float startX, const float rangeX, const float startY, const float rangeY)
+{
+	return vec2f(randf(startX, rangeY), randf(startY, rangeY));
+}
+
 bool about_equal(float a, float b, float epsilon)
 {
 	// the machine epsilon has to be scaled to the magnitude of the values used

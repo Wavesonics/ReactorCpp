@@ -10,6 +10,7 @@
 float randf(const float min, const float max);
 float randPercent();
 vec2f rand_vec2(const float start, const float range);
+vec2f rand_vec2(const float startX, const float rangeX, const float startY, const float rangeY);
 
 bool about_equal(float a, float b, float epsilon);
 
