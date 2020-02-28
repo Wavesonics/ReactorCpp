@@ -29,6 +29,10 @@ int main()
 	nodes.push_back(moderator);
 	neutronField->addNeutronRegion(moderator);
 
+	moderator = new Moderator(Area2d(vec2f(70.0f, 10.0f), vec2f(90.0f, 90.0f)));
+	nodes.push_back(moderator);
+	neutronField->addNeutronRegion(moderator);
+
 
 	cout << "Create neutrons" << endl;
 	timer.start();
