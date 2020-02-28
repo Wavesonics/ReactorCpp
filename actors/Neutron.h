@@ -16,14 +16,14 @@ public:
 	Neutron();
 
 	Neutron(const vec2f &position, const vec2f &velocity);
+
+	bool isThermalized() const;
+
+	static constexpr float SPEED_THERMAL = 10.0f;
+	static constexpr float SPEED_RELATIVISTIC = 100.0f;
+
+	friend std::ostream &operator<<(std::ostream &os, const Neutron &n);
+	friend std::ostream &operator<<(std::ostream &os, Neutron &n);
 };
-
-static constexpr float NEUTRON_SPEED_THERMAL = 10.0f;
-static constexpr float NEUTRON_SPEED_RELATIVISTIC = 1000.0f;
-
-
-std::ostream &operator<<(std::ostream &os, const Neutron &n);
-
-std::ostream &operator<<(std::ostream &os, Neutron &n);
 
 #endif //REACTORCPPTEST_NEUTRON_H

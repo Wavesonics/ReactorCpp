@@ -11,24 +11,23 @@
 #include "../math/Area2d.h"
 #include "NeutronRegion.h"
 
-class NeutronField
+class NeutronField : public Node
 {
 private:
     std::vector<Neutron> neutrons;
     std::vector<int> toRemove;
 
     const Area2d &reactorCore;
-    std::vector<NeutronRegion> regions;
+    std::vector<NeutronRegion *> regions;
 public:
     explicit NeutronField(int capacity, const Area2d &core);
+    virtual ~NeutronField();
 
-    void addNeutronRegion(const NeutronRegion &region);
-
+    void addNeutronRegion(NeutronRegion *region);
     void addNeutron(const Neutron &neutron);
-
     int numNeutrons() const;
 
-    void _physics_process(double delta);
+    virtual void _physics_process(float delta) override;
 };
 
 #endif //REACTORCPPTEST_NEUTRONFIELD_H

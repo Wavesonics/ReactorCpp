@@ -7,6 +7,8 @@
 
 class Node
 {
+public:
+	virtual ~Node();
 	virtual void _physics_process(float delta) = 0;
 };
 

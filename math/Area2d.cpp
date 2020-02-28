@@ -14,7 +14,6 @@ bool Area2d::contains(const vec2f &point) const
 	return point.x > bottomLeft.x && point.x < topRight.x && point.y > bottomLeft.y && point.y < topRight.y;
 }
 
-
 std::ostream &operator<<(std::ostream &os, const Area2d &a)
 {
 	os << "Bottom Left" << a.bottomLeft << " Top Right: " << a.topRight << ")";

@@ -13,7 +13,7 @@ using namespace std;
 template<class Container, class Iterator>
 Iterator orderDestroyingErase(Container &c, Iterator it)
 {
-    if (&(*it) == &(c.back()))
+    if(&(*it) == &(c.back()))
     {
         c.pop_back();
         return std::end(c);
@@ -32,7 +32,7 @@ NeutronField::NeutronField(int capacity, const Area2d &core) : reactorCore(core)
     toRemove.reserve(capacity / 4);
 }
 
-void NeutronField::addNeutronRegion(const NeutronRegion &region)
+void NeutronField::addNeutronRegion(NeutronRegion *region)
 {
     regions.push_back(region);
 }
@@ -47,26 +47,29 @@ int NeutronField::numNeutrons() const
     return neutrons.size();
 }
 
-void NeutronField::_physics_process(double delta)
+void NeutronField::_physics_process(float delta)
 {
     const int n = neutrons.size();
-    for (int ii = 0; ii < n; ++ii)
+    for(int ii = 0; ii < n; ++ii)
     {
         auto neutron = neutrons[ii];
         vec2f scaledVelocity = neutron.velocity * delta;
         neutrons[ii].position += scaledVelocity;
 
-        if (!reactorCore.contains(neutron.position))
+        if(!reactorCore.contains(neutron.position))
         {
             toRemove.push_back(ii);
         }
         else
         {
-            for (auto &region : regions)
+            for(auto region : regions)
             {
-                if (region.contains(neutron.position))
+                if(region->contains(neutron.position))
                 {
-
+                    if(region->handleNeutron(neutron))
+                    {
+                        toRemove.push_back(ii);
+                    }
                 }
             }
         }
@@ -75,9 +78,11 @@ void NeutronField::_physics_process(double delta)
     // Sort in ascending order
     sort(toRemove.begin(), toRemove.end());
     // Iterate in reverse order
-    for (auto index = toRemove.crbegin(); index != toRemove.crend(); ++index)
+    for(auto index = toRemove.crbegin(); index != toRemove.crend(); ++index)
     {
         orderDestroyingErase(neutrons, neutrons.begin() + *index);
     }
     toRemove.clear();
 }
+
+NeutronField::~NeutronField() = default;
