@@ -10,7 +10,7 @@
 
 using namespace std;
 
-template <class Container, class Iterator>
+template<class Container, class Iterator>
 Iterator orderDestroyingErase(Container &c, Iterator it)
 {
     if (&(*it) == &(c.back()))
@@ -26,35 +26,57 @@ Iterator orderDestroyingErase(Container &c, Iterator it)
     }
 }
 
-NeutronField::NeutronField(int capacity, const Area2d &core) : reactorCore(core) {
+NeutronField::NeutronField(int capacity, const Area2d &core) : reactorCore(core)
+{
     neutrons.reserve(capacity);
-    toRemove.reserve(capacity/4);
+    toRemove.reserve(capacity / 4);
 }
 
-void NeutronField::addNeutron(const Neutron &neutron) {
+void NeutronField::addNeutronRegion(const NeutronRegion &region)
+{
+    regions.push_back(region);
+}
+
+void NeutronField::addNeutron(const Neutron &neutron)
+{
     neutrons.push_back(neutron);
 }
 
-int NeutronField::numNeutrons() const {
+int NeutronField::numNeutrons() const
+{
     return neutrons.size();
 }
 
-void NeutronField::_physics_process(double delta) {
+void NeutronField::_physics_process(double delta)
+{
     const int n = neutrons.size();
-    for (int ii = 0; ii < n; ++ii) {
+    for (int ii = 0; ii < n; ++ii)
+    {
         auto neutron = neutrons[ii];
         vec2f scaledVelocity = neutron.velocity * delta;
         neutrons[ii].position += scaledVelocity;
 
-        if (!reactorCore.contains(neutron.position)) {
+        if (!reactorCore.contains(neutron.position))
+        {
             toRemove.push_back(ii);
+        }
+        else
+        {
+            for (auto &region : regions)
+            {
+                if (region.contains(neutron.position))
+                {
+
+                }
+            }
         }
     }
 
     // Sort in ascending order
     sort(toRemove.begin(), toRemove.end());
     // Iterate in reverse order
-    for (auto index = toRemove.crbegin(); index != toRemove.crend(); ++index) {
+    for (auto index = toRemove.crbegin(); index != toRemove.crend(); ++index)
+    {
         orderDestroyingErase(neutrons, neutrons.begin() + *index);
     }
     toRemove.clear();

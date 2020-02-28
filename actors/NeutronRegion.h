@@ -7,8 +7,9 @@
 
 #include "Neutron.h"
 
-class NeutronRegion {
-    virtual void handleNeutron(const Neutron& neutron) = 0;
+class NeutronRegion : public Area2d
+{
+    virtual void handleNeutron(const Neutron &neutron) = 0;
 };
 
 #endif //REACTORCPPTEST_NEUTRONREGION_H

@@ -7,19 +7,22 @@
 
 using namespace std;
 
-Clock::Clock() {
-    lastTick = chrono::high_resolution_clock::now();
-    delta = 0.0f;
+Clock::Clock()
+{
+	lastTick = chrono::high_resolution_clock::now();
+	delta = 0.0f;
 }
 
-void Clock::tick() {
-    chrono::time_point curTick = chrono::high_resolution_clock::now();
-    chrono::duration dur = curTick - lastTick;
-    auto ms = chrono::duration_cast<chrono::milliseconds>(dur).count();
-    lastTick = curTick;
-    delta = (float) ms / 1000.0f;
+void Clock::tick()
+{
+	chrono::time_point curTick = chrono::high_resolution_clock::now();
+	chrono::duration dur = curTick - lastTick;
+	auto ms = chrono::duration_cast<chrono::milliseconds>(dur).count();
+	lastTick = curTick;
+	delta = (float) ms / 1000.0f;
 }
 
-float Clock::getDetla() {
-    return delta;
+float Clock::getDetla()
+{
+	return delta;
 }

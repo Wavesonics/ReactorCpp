@@ -8,13 +8,16 @@
 #include <chrono>
 
 
-class Timer {
+class Timer
+{
 private:
-    std::chrono::time_point<std::chrono::high_resolution_clock> startTime;
+	std::chrono::time_point<std::chrono::high_resolution_clock> startTime;
 public:
-    Timer();
-    void start();
-    long end();
+	Timer();
+
+	void start();
+
+	long end();
 };
 
 

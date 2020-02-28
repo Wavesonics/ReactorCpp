@@ -8,17 +8,20 @@
 
 using namespace std;
 
-Timer::Timer() {
-    startTime = chrono::high_resolution_clock::now();
+Timer::Timer()
+{
+	startTime = chrono::high_resolution_clock::now();
 }
 
-void Timer::start() {
-    startTime = chrono::high_resolution_clock::now();
+void Timer::start()
+{
+	startTime = chrono::high_resolution_clock::now();
 }
 
-long Timer::end() {
-    auto endTime = chrono::high_resolution_clock::now();
-    chrono::duration dur = endTime - startTime;
-    auto ms = chrono::duration_cast<chrono::milliseconds>(dur).count();
-    return ms;
+long Timer::end()
+{
+	auto endTime = chrono::high_resolution_clock::now();
+	chrono::duration dur = endTime - startTime;
+	auto ms = chrono::duration_cast<chrono::milliseconds>(dur).count();
+	return ms;
 }

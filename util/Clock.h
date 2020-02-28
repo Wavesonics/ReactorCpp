@@ -8,14 +8,17 @@
 #include <chrono>
 
 
-class Clock {
+class Clock
+{
 private:
-    std::chrono::time_point<std::chrono::high_resolution_clock> lastTick;
-    float delta;
+	std::chrono::time_point<std::chrono::high_resolution_clock> lastTick;
+	float delta;
 public:
-    Clock();
-    void tick();
-    float getDetla();
+	Clock();
+
+	void tick();
+
+	float getDetla();
 };
 
 

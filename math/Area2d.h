@@ -7,16 +7,19 @@
 
 #include "vec2.h"
 
-class Area2d {
+class Area2d
+{
 public:
-    const vec2f bottomLeft;
-    const vec2f topRight;
+	const vec2f bottomLeft;
+	const vec2f topRight;
 
-    Area2d(const vec2f& bottomLeft, const vec2f& topRight);
-    bool contains(const vec2f& point) const;
+	Area2d(const vec2f &bottomLeft, const vec2f &topRight);
 
-    friend std::ostream& operator<<(std::ostream& os, const Area2d& a);
-    friend std::ostream& operator<<(std::ostream& os, Area2d& a);
+	bool contains(const vec2f &point) const;
+
+	friend std::ostream &operator<<(std::ostream &os, const Area2d &a);
+
+	friend std::ostream &operator<<(std::ostream &os, Area2d &a);
 };
 
 

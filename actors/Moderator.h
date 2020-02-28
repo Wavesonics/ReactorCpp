@@ -10,10 +10,14 @@
 #include "../godot/Node.h"
 #include "NeutronRegion.h"
 
-class Moderator : Area2d, NeutronRegion, Node {
-    Moderator(const vec2f& bottomLeft, const vec2f& topRight);
+class Moderator : public NeutronRegion, public Node
+{
+public:
+    Moderator(const vec2f &bottomLeft, const vec2f &topRight);
+
     void _physics_process(float delta) override;
-    void handleNeutron(const Neutron& neutron) override;
+
+    void handleNeutron(const Neutron &neutron) override;
 };
 
 
