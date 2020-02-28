@@ -6,12 +6,13 @@
 #define REACTORCPPTEST_NEUTRONFIELD_H
 
 #include <vector>
+#include <list>
 #include "Neutron.h"
-#include "Area2d.h"
+#include "../math/Area2d.h"
 
 class NeutronField {
 private:
-    std::vector<Neutron> neutrons;
+    std::vector<Neutron> neutronsV;
     std::vector<int> toRemove;
 
     const Area2d& reactorCore;
@@ -22,6 +23,5 @@ public:
 
     void _physics_process(double delta);
 };
-
 
 #endif //REACTORCPPTEST_NEUTRONFIELD_H

@@ -3,42 +3,59 @@
 //
 
 #include "NeutronField.h"
-#include "vec2.h"
+#include "../math/vec2.h"
 
 #include <iostream>
 #include <algorithm>
 
 using namespace std;
 
+template <class Container, class Iterator>
+Iterator orderDestroyingErase(Container &c, Iterator it)
+{
+    if (&(*it) == &(c.back()))
+    {
+        c.pop_back();
+        return std::end(c);
+    }
+    else
+    {
+        *it = std::move(c.back());
+        c.pop_back();
+        return it;
+    }
+}
+
 NeutronField::NeutronField(int capacity, const Area2d &core) : reactorCore(core) {
-    neutrons.reserve(capacity);
-    toRemove.reserve(capacity);
+    neutronsV.reserve(capacity);
+    toRemove.reserve(capacity/4);
 }
 
 void NeutronField::addNeutron(const Neutron &neutron) {
-    neutrons.push_back(neutron);
+    neutronsV.push_back(neutron);
 }
 
 int NeutronField::numNeutrons() const {
-    return neutrons.size();
+    return neutronsV.size();
 }
 
 void NeutronField::_physics_process(double delta) {
-    const int n = neutrons.size();
+    const int n = neutronsV.size();
     for (int ii = 0; ii < n; ++ii) {
-        auto neutron = neutrons[ii];
+        auto neutron = neutronsV[ii];
         vec2f scaledVelocity = neutron.velocity * delta;
-        neutrons[ii].position += scaledVelocity;
+        neutronsV[ii].position += scaledVelocity;
 
         if (!reactorCore.contains(neutron.position)) {
             toRemove.push_back(ii);
         }
     }
 
+    // Sort in ascending order
     sort(toRemove.begin(), toRemove.end());
+    // Iterate in reverse order
     for (auto index = toRemove.crbegin(); index != toRemove.crend(); ++index) {
-        // $TODO: Holy shit performance problems
-        neutrons.erase(neutrons.begin() + *index);
+        orderDestroyingErase(neutronsV, neutronsV.begin() + *index);
     }
     toRemove.clear();
 }

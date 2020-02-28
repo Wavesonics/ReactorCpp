@@ -5,7 +5,7 @@
 #ifndef REACTORCPPTEST_NEUTRON_H
 #define REACTORCPPTEST_NEUTRON_H
 
-#include "vec2.h"
+#include "../math/vec2.h"
 
 class Neutron {
 public:

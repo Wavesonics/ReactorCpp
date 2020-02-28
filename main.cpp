@@ -2,11 +2,11 @@
 #include <thread>
 #include <chrono>
 
-#include "Clock.h"
-#include "Timer.h"
-#include "Neutron.h"
-#include "NeutronField.h"
-#include "Area2d.h"
+#include "util/Clock.h"
+#include "util/Timer.h"
+#include "actors/Neutron.h"
+#include "actors/NeutronField.h"
+#include "math/Area2d.h"
 
 using namespace std;
 
@@ -24,7 +24,7 @@ int main() {
 
     const Area2d reactorCore = Area2d(vec2f(), vec2f(100.0f, 100.0f));
 
-    const int population = 200000;
+    const int population = 100000;
     NeutronField neutronField = NeutronField(population, reactorCore);
 
 
@@ -44,7 +44,7 @@ int main() {
 
         timer.start();
         neutronField._physics_process(clock.getDetla());
-        cout << "Update: " << timer.end() << endl;
+        cout << "Update: " << timer.end() << " N: " << neutronField.numNeutrons() << endl;
     }
 
     return 0;

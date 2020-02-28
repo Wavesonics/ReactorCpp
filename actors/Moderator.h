@@ -6,8 +6,8 @@
 #define REACTORCPPTEST_MODERATOR_H
 
 
-#include "Area2d.h"
-#include "Node.h"
+#include "../math/Area2d.h"
+#include "../godot/Node.h"
 #include "NeutronRegion.h"
 
 class Moderator : Area2d, NeutronRegion, Node {
