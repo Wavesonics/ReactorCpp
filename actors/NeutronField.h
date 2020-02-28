@@ -12,7 +12,7 @@
 
 class NeutronField {
 private:
-    std::vector<Neutron> neutronsV;
+    std::vector<Neutron> neutrons;
     std::vector<int> toRemove;
 
     const Area2d& reactorCore;
