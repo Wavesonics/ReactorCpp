@@ -10,24 +10,30 @@
 #include "Neutron.h"
 #include "../math/Area2d.h"
 #include "NeutronRegion.h"
+#include "../util/ThreadPool.h"
 
 class NeutronField : public Node
 {
 private:
+	ThreadPool threadPool;
+	int numWorkers;
+
     std::vector<Neutron> neutrons;
-    std::vector<int> toRemove;
+	std::vector<int> toRemove;
+	std::vector<std::vector<int>*> workerScratchSpace;
 
     const Area2d &reactorCore;
     std::vector<NeutronRegion *> regions;
+	std::vector<int>* processNeutronBatch(std::vector<int>* removal, int start, int end, float delta);
 public:
     explicit NeutronField(int capacity, const Area2d &core);
-    virtual ~NeutronField();
+    ~NeutronField() override;
 
     void addNeutronRegion(NeutronRegion *region);
     void addNeutron(const Neutron &neutron);
     int numNeutrons() const;
 
-    virtual void _physics_process(float delta) override;
+    void _physics_process(float delta) override;
 };
 
 #endif //REACTORCPPTEST_NEUTRONFIELD_H

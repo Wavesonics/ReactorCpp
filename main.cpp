@@ -23,8 +23,8 @@ int main()
 
 	const Area2d reactorCore = Area2d(vec2f(), vec2f(100.0f, 100.0f));
 
-	const int population = 100000;
-	auto *neutronField = new NeutronField(population, reactorCore);
+	const int population = 1000000;
+	auto *neutronField = new NeutronField(population*2, reactorCore);
 	nodes.push_back(neutronField);
 
 	auto moderator = new Moderator(Area2d(vec2f(10.0f, 10.0f), vec2f(30.0f, 90.0f)));
@@ -43,7 +43,6 @@ int main()
 	nodes.push_back(control);
 	neutronField->addNeutronRegion(control);
 
-	/*
 	cout << "Create neutrons" << endl;
 	timer.start();
 	for(int ii = 0; ii < population; ++ii)
@@ -54,7 +53,6 @@ int main()
 		neutronField->addNeutron(n);
 	}
 	 cout << "Creation took: " << timer.end() << endl;
-	*/
 
 	cout << "Begin sim" << endl;
 	while(true)
